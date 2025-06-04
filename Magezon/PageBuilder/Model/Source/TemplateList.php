@@ -22,7 +22,7 @@ class TemplateList implements \Magezon\Builder\Model\Source\ListInterface
     protected $templateFactory;
 
     /**
-     * @var \Magento\PageBuilder\Model\ResourceModel\Template\CollectionFactory
+     * @var \Magezon\PageBuilder\Model\ResourceModel\Template\CollectionFactory
      */
     protected $collectionFactory;
 
