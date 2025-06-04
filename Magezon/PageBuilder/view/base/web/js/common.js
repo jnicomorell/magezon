@@ -8,7 +8,7 @@ define([
 	});
 
 	var playvideo = function(element) {
-		element.on('click', function(e) {
+    element.on('click', function(e) {
 			var parent = element.closest('.mgz-video');
 			var iframe = parent.find('iframe');
 			var video  = parent.find('video');
@@ -62,7 +62,7 @@ define([
 
 		$(document).find('.mgz-video-image-overlay').each(function(index, el) {
 			if ($(this).children('i').length) {
-				$(this).children('i').on('click', function(event) {
+     $(this).children('i').on('click', function(event) {
 					playvideo($(this).children('i'));
 				});
 			} else {
@@ -74,18 +74,18 @@ define([
 			$(this).siblings('a').trigger('click');
 		});
 
-		$('.mgz-single-image-caption').on('click', function(event) {
-			$(this).siblings('a').first().trigger('click');
-		});
+    $('.mgz-single-image-caption').on('click', function(event) {
+            $(this).siblings('a').first().trigger('click');
+    });
 
-		$('.mgz-element-image_carousel .item-content').on('click', function(event) {
-			if($(this).siblings('a').length) $(this).siblings('a').first().trigger('click');
-		});
+    $('.mgz-element-image_carousel .item-content').on('click', function(event) {
+            if($(this).siblings('a').length) $(this).siblings('a').first().trigger('click');
+    });
 	}
 
-	$(window).on('resize', function() {
-		calFlipboxHeight();
-	}).resize();
+        $(window).on('resize', function() {
+                calFlipboxHeight();
+        }).trigger('resize');
 
 	$('body').on('magezonPageBuilderUpdated', function() {
 		calFlipboxHeight();
