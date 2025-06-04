@@ -8,7 +8,7 @@ define([
 	});
 
 	var playvideo = function(element) {
-		element.click(function(e) {
+		element.on('click', function(e) {
 			var parent = element.closest('.mgz-video');
 			var iframe = parent.find('iframe');
 			var video  = parent.find('video');
@@ -62,7 +62,7 @@ define([
 
 		$(document).find('.mgz-video-image-overlay').each(function(index, el) {
 			if ($(this).children('i').length) {
-				$(this).children('i').click(function(event) {
+				$(this).children('i').on('click', function(event) {
 					playvideo($(this).children('i'));
 				});
 			} else {
@@ -74,12 +74,12 @@ define([
 			$(this).siblings('a').trigger('click');
 		});
 
-		$('.mgz-single-image-caption').click(function(event) {
-			$(this).siblings('a')[0].click();
+		$('.mgz-single-image-caption').on('click', function(event) {
+			$(this).siblings('a').first().trigger('click');
 		});
 
-		$('.mgz-element-image_carousel .item-content').click(function(event) {
-			if($(this).siblings('a').length) $(this).siblings('a')[0].click();
+		$('.mgz-element-image_carousel .item-content').on('click', function(event) {
+			if($(this).siblings('a').length) $(this).siblings('a').first().trigger('click');
 		});
 	}
 
