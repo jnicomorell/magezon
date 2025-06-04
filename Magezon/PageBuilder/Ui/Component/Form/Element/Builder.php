@@ -20,19 +20,13 @@ use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\PageBuilder\Model\Config as PageBuilderConfig;
 use Magento\PageBuilder\Model\Stage\Config as Config;
-use Magento\PageBuilder\Model\State as PageBuilderState;
 use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 
 class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
 {
     const NAME = 'textarea';
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
 
     /**
      * @var \Magezon\PageBuilder\Helper\Data
@@ -49,7 +43,6 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
      * @param FormFactory                           $formFactory
      * @param ConfigInterface                       $wysiwygConfig
      * @param \Magento\Framework\View\LayoutFactory $layoutFactory
-     * @param \Magento\Framework\Registry           $registry
      * @param \Magezon\PageBuilder\Helper\Data      $dataHelper
      * @param array                                 $data
      * @param array                                 $config
@@ -59,16 +52,13 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         FormFactory $formFactory,
         ConfigInterface $wysiwygConfig,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
-        \Magento\Framework\Registry $registry,
         \Magezon\PageBuilder\Helper\Data $dataHelper,
         CategoryAttributeRepositoryInterface $attrRepository,
         array $components = [],
         array $data = [],
         array $config = [],
-        bool $overrideSnapshot = false,
         Repository $assetRepo = null
     ) {
-        $this->registry   = $registry;
         $this->dataHelper = $dataHelper;
 
         if ($dataHelper->getConfig('general/enable')) {
@@ -98,8 +88,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
                 && !$wysiwygConfigData['is_pagebuilder_enabled']
                 || false;
 
-            $pageBuilderState = ObjectManager::getInstance()->get(PageBuilderState::class);
-            if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder) && !$isShortDescription) {
+            if (!$isEnablePageBuilder && !$isShortDescription) {
                 $stageConfig = ObjectManager::getInstance()->get(Config::class);
                 // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
                 $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
@@ -111,11 +100,6 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
                 $wysiwygConfigData['pagebuilder_button'] = true;
                 $wysiwygConfigData['pagebuilder_content_snapshot'] = true;
                 $wysiwygConfigData = $this->processBreakpointsIcons($wysiwygConfigData);
-
-                if ($overrideSnapshot) {
-                    $pageBuilderConfig = $pageBuilderConfig ?: ObjectManager::getInstance()->get(PageBuilderConfig::class);
-                    $wysiwygConfigData['pagebuilder_content_snapshot'] = $pageBuilderConfig->isContentPreviewEnabled();
-                }
 
                 // Add Classes for Page Builder Stage
                 if (isset($wysiwygConfigData['pagebuilder_content_snapshot'])
@@ -140,7 +124,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
             $formFactory,
             $wysiwygConfig,
             $layoutFactory,
-            $registry,
+            $context->getRegistry(),
             $components,
             $data,
             $config
@@ -171,16 +155,17 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         $isDisableArea = false;
         $type = '';
 
-        if ($this->registry->registry('cms_page')) {
+        $registry = $context->getRegistry();
+        if ($registry->registry('cms_page')) {
             $type = 'page';
         }
-        if ($this->registry->registry('cms_block')) {
+        if ($registry->registry('cms_block')) {
             $type = 'block';
         }
-        if ($this->registry->registry('current_product')) {
+        if ($registry->registry('current_product')) {
             $type = 'product';
         }
-        if ($this->registry->registry('current_category')) {
+        if ($registry->registry('current_category')) {
             $type = 'category';
         }
 
