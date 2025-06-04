@@ -39,6 +39,11 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
     protected $assetRepo;
 
     /**
+     * @var \Magento\Framework\Registry
+     */
+    private $registry;
+
+    /**
      * @param ContextInterface                      $context
      * @param FormFactory                           $formFactory
      * @param ConfigInterface                       $wysiwygConfig
@@ -52,6 +57,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         FormFactory $formFactory,
         ConfigInterface $wysiwygConfig,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
+        \Magento\Framework\Registry $registry,
         \Magezon\PageBuilder\Helper\Data $dataHelper,
         CategoryAttributeRepositoryInterface $attrRepository,
         array $components = [],
@@ -60,6 +66,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         Repository $assetRepo = null
     ) {
         $this->dataHelper = $dataHelper;
+        $this->registry = $registry;
 
         if ($dataHelper->getConfig('general/enable')) {
             $config['ajax_data']['load_builder_url'] = 'mgzpagebuilder/builder/load';
@@ -124,7 +131,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
             $formFactory,
             $wysiwygConfig,
             $layoutFactory,
-            $context->getRegistry(),
+            $this->registry,
             $components,
             $data,
             $config
@@ -155,7 +162,7 @@ class Builder extends \Magezon\Builder\Ui\Component\Form\Element\Builder
         $isDisableArea = false;
         $type = '';
 
-        $registry = $context->getRegistry();
+        $registry = $this->registry;
         if ($registry->registry('cms_page')) {
             $type = 'page';
         }

@@ -20,6 +20,7 @@ use Magento\Catalog\Model\Layer\Resolver as LayerResolver;
  */
 class Categories extends \Magezon\Builder\Block\Element
 {
+    private \Magezon\PageBuilder\ViewModel\CategoriesData $viewModel;
     /**
      * @var \Magezon\PageBuilder\Model\Source\Categories
      */
@@ -47,11 +48,18 @@ class Categories extends \Magezon\Builder\Block\Element
         \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\Core\Model\Source\Categories $categories,
         LayerResolver $layerResolver,
+        \Magezon\PageBuilder\ViewModel\CategoriesData $viewModel,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->categories = $categories;
         $this->layerResolver = $layerResolver;
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): \Magezon\PageBuilder\ViewModel\CategoriesData
+    {
+        return $this->viewModel;
     }
 
     /**

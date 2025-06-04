@@ -654,10 +654,4 @@
 			</argument>
 		</arguments>
 	</type>
-        <type name="Magento\Catalog\Model\Indexer\Category\Flat\Action\Full">
-                <plugin name="magezonbuilder_columns" type="\Magezon\PageBuilder\Plugin\Model\Indexer\Category\Flat\AbstractAction" />
-        </type>
-        <type name="Magento\Catalog\Model\Indexer\Category\Flat\Action\Rows">
-                <plugin name="magezonbuilder_columns" type="\Magezon\PageBuilder\Plugin\Model\Indexer\Category\Flat\AbstractAction" />
-        </type>
 </config>

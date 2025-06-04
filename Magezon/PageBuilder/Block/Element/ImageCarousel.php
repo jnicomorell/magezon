@@ -16,6 +16,7 @@ namespace Magezon\PageBuilder\Block\Element;
 
 class ImageCarousel extends \Magezon\Builder\Block\Element
 {
+    private \Magezon\PageBuilder\ViewModel\ImageCarouselData $viewModel;
     /**
      * @var \Magezon\Builder\Helper\Image
      */
@@ -36,11 +37,18 @@ class ImageCarousel extends \Magezon\Builder\Block\Element
         \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\Builder\Helper\Image $builderImageHelper,
         \Magezon\Builder\Helper\Data $builderHelper,
+        \Magezon\PageBuilder\ViewModel\ImageCarouselData $viewModel,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->builderImageHelper = $builderImageHelper;
         $this->builderHelper      = $builderHelper;
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): \Magezon\PageBuilder\ViewModel\ImageCarouselData
+    {
+        return $this->viewModel;
     }
 
     /**
