@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Magezon\PageBuilder\Block\Element;
 
 use Magento\Catalog\Model\Layer\Resolver as LayerResolver;
+use Magezon\PageBuilder\ViewModel\Categories as ViewModel;
 
 /**
  * Categories block for displaying category listings.
@@ -29,6 +30,11 @@ class Categories extends \Magezon\Builder\Block\Element
      * @var LayerResolver
      */
     private $layerResolver;
+
+    /**
+     * @var ViewModel
+     */
+    private ViewModel $viewModel;
 
     /**
      * @var array
@@ -47,11 +53,18 @@ class Categories extends \Magezon\Builder\Block\Element
         \Magento\Framework\View\Element\Template\Context $context,
         \Magezon\Core\Model\Source\Categories $categories,
         LayerResolver $layerResolver,
+        ViewModel $viewModel,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->categories = $categories;
         $this->layerResolver = $layerResolver;
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
     }
 
     /**
