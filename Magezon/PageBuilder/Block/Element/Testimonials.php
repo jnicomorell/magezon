@@ -14,8 +14,33 @@
 
 namespace Magezon\PageBuilder\Block\Element;
 
+use Magento\Framework\View\Element\Template\Context;
+use Magezon\PageBuilder\ViewModel\Testimonials as ViewModel;
+
 class Testimonials extends \Magezon\Builder\Block\Element
 {
+    /**
+     * @var ViewModel
+     */
+    private ViewModel $viewModel;
+
+    public function __construct(
+        Context $context,
+        ViewModel $viewModel,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
+        $this->viewModel = $viewModel;
+    }
+
+    /**
+     * Return ViewModel instance
+     */
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
+    }
+
     /**
      * @return string
      */
