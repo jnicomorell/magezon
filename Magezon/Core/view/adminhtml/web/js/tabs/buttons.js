@@ -27,14 +27,14 @@ define([
         }));
     }
 
-    $('#save-button').click(function () {
+    $('#save-button').on('click', function () {
         // $('.page-content').trigger('save');
         // console.log(adapter);
 
         //form.save('http://google.com', {'demo': 1});
     });    
 
-    $('#customer-edit-delete-button').click(function () {
+    $('#customer-edit-delete-button').on('click', function () {
         var msg = $.mage.__('Are you sure you want to do this?'),
             url = $('#customer-edit-delete-button').data('url');
 

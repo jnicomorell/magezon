@@ -48,7 +48,7 @@ $formName = $this->getFormName();
 
                 return result;
             }
-            $('#mgz_conditions_preview_btn').click(function () {
+            $('#mgz_conditions_preview_btn').on('click', function () {
                 var data = uiRegistry.get('<?= $formName ?>.<?= $formName ?>_data_source').get('data');
                 var additionalFields = $('[data-form-part=<?= $formName ?>]');
                 var additional = collectData(additionalFields);

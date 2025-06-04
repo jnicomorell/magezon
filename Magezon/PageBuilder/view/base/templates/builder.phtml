@@ -85,12 +85,12 @@ $url               = $this->getUrl('mgzpagebuilder/product/wysiwyg');
 				parent.parent().addClass('mgz-builder-grouped-wrapper');
 			}
 			parent.find('.admin__field-control').eq(0).prepend('<button type="button" class="mgz-builder-action-btn mgz-builder-active-btn"><i class="mgz-icon mgz-icon-magezon-pagebuilder"></i><span><?= __('Active Magezon Page Builder') ?></span></button><button type="button" class="mgz-builder-action-btn mgz-builder-deactive-btn"><i class="mgz-icon mgz-icon-magezon-pagebuilder"></i><span><?= __('Deactivate Magezon Page Builder') ?></span></button><button type="button" onclick="magezonPageBuilderWysiwygEditor.open(\'<?= $url ?>\', \'<?= $targetId ?>\')" class="mgz-builder-wysiwyg-btn action-default"><span><?= __('WYSIWYG Editor') ?></span></button>');
-			$('.<?= $id ?>-wrapper .mgz-builder-active-btn').click(function(e) {
+                        $('.<?= $id ?>-wrapper').on('click', '.mgz-builder-active-btn', function(e) {
 				$rootScope.$broadcast('importShortcode');
 				$('.<?= $id ?>-wrapper').addClass('mgz-deactive-builder');
 				$('.<?= $id ?>-wrapper').removeClass('mgz-active-builder');
 			});
-			$('.<?= $id ?>-wrapper .mgz-builder-deactive-btn').click(function(e) {
+                        $('.<?= $id ?>-wrapper').on('click', '.mgz-builder-deactive-btn', function(e) {
 				$('.<?= $id ?>-wrapper').addClass('mgz-active-builder');
 				$('.<?= $id ?>-wrapper').removeClass('mgz-deactive-builder');
 				$rootScope.$broadcast('closeAllModals');

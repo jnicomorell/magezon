@@ -1,22 +1,25 @@
 <?php
-$coreHelper                  = $this->helper('\Magezon\Core\Helper\Data');
-$builderHelper               = $this->helper('\Magezon\Builder\Helper\Data');
-$element                     = $this->getElement();
-$items                       = $this->toObjectArray($element->getItems());
-$id                          = time() . uniqid();
-$htmlId                      = $element->getHtmlId();
-$carouselOptions             = $this->getOwlCarouselOptions();
-$classes                     = $this->getOwlCarouselClasses();
-$sliderHeight                = $element->getData('slider_height');
-$lazyLoad                    = $element->getData('owl_lazyload');
-$hoverEffect                 = $element->getData('image_hover_effect');
+/**
+ * @var \Magezon\PageBuilder\Block\Element\Slider $block
+ * @var \Magezon\PageBuilder\ViewModel\SliderViewModel $viewModel
+ */
+$viewModel    = $block->getViewModel();
+$element      = $viewModel->getElement();
+$items        = $viewModel->getSlides();
+$id           = time() . uniqid();
+$htmlId       = $viewModel->getHtmlId();
+$carouselOptions = $viewModel->getOwlCarouselOptions();
+$classes      = $viewModel->getOwlCarouselClasses();
+$sliderHeight = $element->getData('slider_height');
+$lazyLoad     = $element->getData('owl_lazyload');
+$hoverEffect  = $element->getData('image_hover_effect');
 if ($hoverEffect) $classes[] = 'mgz-image-hovers';
 ?>
 <div id="<?= $id ?>" class="mgz-carousel owl-carousel <?= implode(' ', $classes) ?>" data-slider_height="<?= $sliderHeight ?>">
 	<?php foreach ($items as $i => $item) { ?>
 		<?php
-		$backgroundType         = $item['background_type'];
-		$src                    = $builderHelper->getImageUrl($item['image']);
+                $backgroundType         = $item['background_type'];
+                $src                    = $viewModel->getImageUrl($item['image']);
 		$heading                = $item['heading'];
 		$headingType            = $item['heading_type'] ? $item['heading_type'] : 'h2';
 		$headingAnimation       = $item['heading_animation'];
@@ -37,12 +40,12 @@ if ($hoverEffect) $classes[] = 'mgz-image-hovers';
 		$caption2LineHeight     = $item['caption2_line_height'] ? $item['caption2_line_height'] : 38;
 		$linkType               = $item['link_type'] ? $item['link_type'] : 'full';
 		$slideTarget            = $item['slide_target'];
-		$slideLink              = $this->getLinkParams($item['slide_link']);
+                $slideLink              = $viewModel->getLinkParams($item['slide_link']);
 		$contentPosition        = $item['content_position'] ? $item['content_position'] : 'middle-center';
 		$button1                = $item['button1'];
 		$button1Animation       = $item['button1_animation'];
 		$button1AnimationDelay  = $item['button1_animation_delay'];
-		$button1Link            = $this->getLinkParams($item['button1_link']);
+                $button1Link            = $viewModel->getLinkParams($item['button1_link']);
 		$button1Style           = $item['button1_style'];
 		$button1Size            = $item['button1_size'];
 		$button1FontSize        = $item['button1_font_size'] ? $item['button1_font_size'] : 18;
@@ -50,13 +53,13 @@ if ($hoverEffect) $classes[] = 'mgz-image-hovers';
 		$button2                = $item['button2'];
 		$button2Animation       = $item['button2_animation'];
 		$button2AnimationDelay  = $item['button2_animation_delay'];
-		$button2Link            = $this->getLinkParams($item['button2_link']);
+                $button2Link            = $viewModel->getLinkParams($item['button2_link']);
 		$button2Style           = $item['button2_style'];
 		$button2Size            = $item['button2_size'];
 		$button2FontSize        = $item['button2_font_size'] ? $item['button2_font_size'] : 18;
 		$button2LineHeight      = $item['button2_line_height'] ? $item['button2_line_height'] : 24;
 		$aspectRatio            = $item['aspect_ratio'] ? $item['aspect_ratio'] : 219;
-		$ifrmeSrc               = $this->getIframeSrc($item);
+                $ifrmeSrc               = $viewModel->getIframeSrc($item);
 		$localLink              = $item['local_link'];
 		$controls               = $item['controls'];
 		$autoPlay               = $item['autoplay'];
@@ -176,8 +179,8 @@ if ($hoverEffect) $classes[] = 'mgz-image-hovers';
 	 * DESCRIPTION: Changed slider element instance name to sliderOwl
 	 * Changes made to lines 179 and 180
 	*/
-	require(['jquery', 'Magezon_PageBuilder/js/sliderOwl'], function($) {
-		$('#<?= $id ?>').sliderOwl(<?= $coreHelper->serialize($carouselOptions) ?>);
+        require(['jquery', 'Magezon_PageBuilder/js/sliderOwl'], function($) {
+                $('#<?= $id ?>').sliderOwl(<?= $viewModel->serialize($carouselOptions) ?>);
 
 	})
 </script>

@@ -23,7 +23,7 @@ define([
 			},
 			link: function(scope, element) {
 				if (scope.$parent.mgz.element) {
-					element.find('.mgz-icon-edit').click(function(event) {
+                                        element.find('.mgz-icon-edit').on('click', function(event) {
 						var span = element.find('.mgz-modal-title-inner');
 						var t = document.createRange();
 						var i = window.getSelection();
