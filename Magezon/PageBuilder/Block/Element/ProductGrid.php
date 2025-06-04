@@ -19,6 +19,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\DesignInterface;
 use Magezon\Core\Model\ProductList;
 use Magezon\Core\Helper\Data as CoreHelper;
+use Magezon\PageBuilder\ViewModel\ProductGrid as ViewModel;
 
 /**
  * Product grid block for page builder.
@@ -56,6 +57,11 @@ class ProductGrid extends \Magezon\Builder\Block\ListProduct
     private $design;
 
     /**
+     * @var ViewModel
+     */
+    private $viewModel;
+
+    /**
      * Constructor.
      *
      * @param HttpContext $httpContext
@@ -73,6 +79,7 @@ class ProductGrid extends \Magezon\Builder\Block\ListProduct
         DesignInterface $design,
         ProductList $productList,
         CoreHelper $coreHelper,
+        ViewModel $viewModel,
         array $data = []
     ) {
         parent::__construct($data);
@@ -82,6 +89,12 @@ class ProductGrid extends \Magezon\Builder\Block\ListProduct
         $this->design = $design;
         $this->productList = $productList;
         $this->coreHelper = $coreHelper;
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
     }
 
     /**
