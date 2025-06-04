@@ -1,5 +1,5 @@
 <?php
-$element = $this->getElement();
+$element = $block->getElement();
 $attrs   = [];
 if ($element->getData('btn_url')) $attrs['data-href'] = $element->getData('btn_url');
 if ($element->getData('btn_layout')) $attrs['data-layout'] = $element->getData('btn_layout');

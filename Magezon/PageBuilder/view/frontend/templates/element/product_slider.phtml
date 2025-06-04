@@ -1,18 +1,20 @@
 <?php
+/** @var \Magezon\PageBuilder\Block\Element\ProductSlider $block */
+/** @var \Magezon\PageBuilder\ViewModel\ProductSlider $viewModel */
 use Magento\Framework\App\Action\Action;
 
-$coreHelper           = $this->helper('\Magezon\Core\Helper\Data');
-$compareHelper        = $this->helper('Magento\Catalog\Helper\Product\Compare');
-$element              = $this->getElement();
-$title                = $coreHelper->filter($element->getData('title'));
+$viewModel = $block->getViewModel();
+$compareHelper = $block->helper('Magento\Catalog\Helper\Product\Compare');
+$element       = $block->getElement();
+$title         = $viewModel->filter($element->getData('title'));
 $titleAlign           = $element->getData('title_align');
 $titleTag             = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
-$description          = $coreHelper->filter($element->getData('description'));
+$description          = $viewModel->filter($element->getData('description'));
 $showLine             = $element->getData('show_line');
 $linePosition         = $element->getData('line_position');
-$carouselOptions      = $this->getOwlCarouselOptions();
+$carouselOptions      = $block->getOwlCarouselOptions();
 $lazyLoad             = $element->getData('owl_lazyload');
-$items                = $this->getItems();
+$items                = $block->getItems();
 $imageId              = 'category_page_grid';
 $templateType         = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
 $showImage            = $element->getData('product_image');
@@ -26,7 +28,7 @@ $showReview           = $element->getData('product_review');
 $swatches             = $element->getData('product_swatches');
 $htmlId               = $element->getHtmlId();
 $id                   = time() . uniqid();
-$classes              = $this->getOwlCarouselClasses();
+$classes              = $block->getOwlCarouselClasses();
 ?>
 <div class="mgz-block">
 	<?php if ($title || $description) { ?>
@@ -51,7 +53,7 @@ $classes              = $this->getOwlCarouselClasses();
 		                    <a href="<?= $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
 		                    	<?php
 		                    	$imgHtml = $productImage->toHtml();
-		                    	if ($lazyLoad) $imgHtml = $coreHelper->filterCarouselLazyImage($imgHtml);
+                                        if ($lazyLoad) $imgHtml = $viewModel->filterCarouselLazyImage($imgHtml);
 		                    	?>
 		                        <?= $imgHtml ?>
 		                    </a>
@@ -69,12 +71,12 @@ $classes              = $this->getOwlCarouselClasses();
 
 								<?= $showPrice ? $block->getProductPrice($_product) : '' ?>
 
-								<?= $swatches ? $this->getSwatchesHtml($_product) : '' ?>
+                                                                <?= $swatches ? $block->getSwatchesHtml($_product) : '' ?>
 
 								<?= ($templateType && $showReview) ? $block->getReviewsSummaryHtml($_product, $templateType) : '' ?>
 
 								<?php if ($showShortDescription) { ?>
-									<div class="product-item-shortdescription"><?= $coreHelper->filter($_product->getShortDescription()) ?></div>
+                                                                        <div class="product-item-shortdescription"><?= $viewModel->filter($_product->getShortDescription()) ?></div>
 								<?php } ?>
 
 								<?php if ($showWishlist || $showCompare || $showCart) { ?>
@@ -108,7 +110,7 @@ $classes              = $this->getOwlCarouselClasses();
 										<?php } ?>
 										<?php if ($showWishlist || $showCompare) { ?>
 											<div class="actions-secondary" data-role="add-to-links">
-												<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $showWishlist) { ?>
+                                                                               <?php if ($viewModel->isWishlistAllowed() && $showWishlist) { ?>
 													<a href="#"
 														data-post='<?= $block->getAddToWishlistParams($_product) ?>'
 														class="action towishlist" data-action="add-to-wishlist"
@@ -135,7 +137,7 @@ $classes              = $this->getOwlCarouselClasses();
 			</div>
 			<script>
 				require(['jquery', 'Magezon_Builder/js/carousel'], function($) {
-					$('#<?= $id ?>').carousel(<?= $coreHelper->serialize($carouselOptions) ?>);
+                                        $('#<?= $id ?>').carousel(<?= $viewModel->serialize($carouselOptions) ?>);
 				})
 			</script>
 		<?php } ?>

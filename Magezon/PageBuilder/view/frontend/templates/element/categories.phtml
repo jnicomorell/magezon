@@ -29,7 +29,7 @@ $id           = $element->getHtmlId();
 			require(['jquery'], function($) {
 				$('.<?= $id ?> .active').parents('li').addClass('active');
 				$('.<?= $id ?> .active').children('ul').slideDown();
-				$('.<?= $id ?> .opener').click(function(e) {
+				$('.<?= $id ?> .opener').on('click', function(e) {
 					e.preventDefault();
 					$(this).closest('li').toggleClass('active');
 					$(this).closest('li').siblings('li').removeClass('active').children('ul').slideUp();

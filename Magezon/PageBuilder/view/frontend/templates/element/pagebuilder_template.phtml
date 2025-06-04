@@ -1,4 +1,8 @@
 <?php
-$dataHelper = $this->helper('\Magezon\PageBuilder\Helper\Data');
-$template   = $this->getPageBuilderTemplate();
-echo $dataHelper->filter($template->getProfile());
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\PageBuilder\ViewModel\PageBuilderTemplateData $viewModel
+ */
+$viewModel = $block->getViewModel();
+?>
+<?= $viewModel->getFilteredProfile(); ?>

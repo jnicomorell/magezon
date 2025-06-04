@@ -1,17 +1,19 @@
 <?php
-$coreHelper    = $this->helper('\Magezon\Core\Helper\Data');
-$builderHelper = $this->helper('\Magezon\Builder\Helper\Data');
-$element       = $this->getElement();
-$primaryTitle  = $coreHelper->filter($element->getData('primary_title'));
-$primaryText   = $coreHelper->filter($element->getData('primary_text'));
-$primaryImage  = $element->getData('primary_image') ? $builderHelper->getImageUrl($element->getData('primary_image')) : '';
-$hoverTitle    = $coreHelper->filter($element->getData('hover_title'));
-$hoverText     = $coreHelper->filter($element->getData('hover_text'));
-$hoverImage    = $element->getData('hover_image') ? $builderHelper->getImageUrl($element->getData('hover_image')) : '';
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magezon\PageBuilder\ViewModel\FlipBoxData $viewModel */
+$viewModel = $block->getViewModel();
+
+$element       = $block->getElement();
+$primaryTitle  = $viewModel->filter($element->getData('primary_title'));
+$primaryText   = $viewModel->filter($element->getData('primary_text'));
+$primaryImage  = $viewModel->getImageUrl($element->getData('primary_image'));
+$hoverTitle    = $viewModel->filter($element->getData('hover_title'));
+$hoverText     = $viewModel->filter($element->getData('hover_text'));
+$hoverImage    = $viewModel->getImageUrl($element->getData('hover_image'));
 $flipDirection = $element->getData('flip_direction');
 $enableButton  = $element->getData('enable_button');
 $buttonTitle   = $element->getData('button_title');
-$buttonLink    = $this->getLinkParams($element->getData('button_link'));
+$buttonLink    = $block->getLinkParams($element->getData('button_link'));
 $boxMinHeight  = $element->getData('box_min_height');
 $icon          = $element->getData('icon');
 $flipEffect    = $element->getData('flip_effect');

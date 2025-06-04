@@ -18,6 +18,7 @@ use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\DesignInterface;
 use Magento\Catalog\Model\ProductFactory;
+use Magezon\PageBuilder\ViewModel\SingleProductData as ViewModel;
 
 /**
  * Single Product block for page builder.
@@ -55,6 +56,11 @@ class SingleProduct extends \Magezon\Builder\Block\ListProduct
     private $design;
 
     /**
+     * @var ViewModel
+     */
+    private ViewModel $viewModel;
+
+    /**
      * Constructor.
      *
      * @param HttpContext $httpContext
@@ -70,6 +76,7 @@ class SingleProduct extends \Magezon\Builder\Block\ListProduct
         StoreManagerInterface $storeManager,
         DesignInterface $design,
         ProductFactory $productFactory,
+        ViewModel $viewModel,
         array $data = []
     ) {
         parent::__construct($data);
@@ -78,6 +85,12 @@ class SingleProduct extends \Magezon\Builder\Block\ListProduct
         $this->storeManager = $storeManager;
         $this->design = $design;
         $this->productFactory = $productFactory;
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
     }
 
     /**

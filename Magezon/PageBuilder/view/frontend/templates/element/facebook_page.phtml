@@ -1,10 +1,14 @@
 <?php
-$builderHelper = $this->helper('\Magezon\Builder\Helper\Data');
-$element       = $this->getElement();
+$viewModel = $block->getViewModel();
+$element   = $block->getElement();
 $attrs['data-href']                  = $element->getData('page_url');
 $attrs['data-tabs']                  = $element->getData('page_tabs') ? $element->getData('page_tabs') : 'timeline';
-if ($element->getData('page_width')) $attrs['data-width'] = $builderHelper->getStyleProperty($element->getData('page_width'));
-if ($element->getData('page_height')) $attrs['data-height'] = $builderHelper->getStyleProperty($element->getData('page_height'));
+if ($element->getData('page_width')) {
+    $attrs['data-width'] = $viewModel->getStyleProperty($element->getData('page_width'));
+}
+if ($element->getData('page_height')) {
+    $attrs['data-height'] = $viewModel->getStyleProperty($element->getData('page_height'));
+}
 $attrs['data-small-header']          = $element->getData('small_header') ? 'true' : 'false';
 $attrs['data-adapt-container-width'] = $element->getData('adapt_container_width') ? 'true' : 'false';
 $attrs['data-hide-cover']            = $element->getData('hide_cover') ? 'true' : 'false';

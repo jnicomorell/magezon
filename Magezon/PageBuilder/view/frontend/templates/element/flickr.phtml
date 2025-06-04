@@ -1,22 +1,20 @@
 <?php
-$coreHelper                = $this->helper('\Magezon\Core\Helper\Data');
-$element                   = $this->getElement();
-$title                     = $coreHelper->filter($element->getData('title'));
-$titleAlign                = $element->getData('title_align');
-$titleTag                  = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
-$description               = $coreHelper->filter($element->getData('description'));
-$showLine                  = $element->getData('show_line');
-$options['apiKey']         = $element->getData('flickr_api_key');
-$options['photosetId']     = $element->getData('flickr_album_id');
-$options['showPhotoTitle'] = $element->getData('show_photo_title');
-$options['thumSize']       = $element->getData('thum_size');
-$maxItems                  = $element->getData('max_items');
-if ($maxItems) $options['photosLimit'] = $maxItems;
-$xl = $element->getData('item_xl');
-$lg = $element->getData('item_lg');
-$md = $element->getData('item_md');
-$sm = $element->getData('item_sm');
-$xs = $element->getData('item_xs');
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magezon\PageBuilder\ViewModel\Flickr $viewModel */
+$viewModel = $block->getViewModel();
+
+$element     = $viewModel->getElement();
+$title       = $viewModel->getFilteredTitle();
+$titleAlign  = $element->getData('title_align');
+$titleTag    = $viewModel->getTitleTag();
+$description = $viewModel->getFilteredDescription();
+$showLine    = $viewModel->isShowLine();
+$options     = $viewModel->getSerializedOptions();
+$xl          = $element->getData('item_xl');
+$lg          = $element->getData('item_lg');
+$md          = $element->getData('item_md');
+$sm          = $element->getData('item_sm');
+$xs          = $element->getData('item_xs');
 ?>
 <div class="mgz-block">
 	<?php if ($title || $description) { ?>
@@ -29,8 +27,8 @@ $xs = $element->getData('item_xs');
 		<?php } ?>
 	</div>
 	<?php } ?>
-	<div class="mgz-block-content">
-		<div class="mgz-flick" data-mage-init='{"Magezon_PageBuilder/js/flickr":<?= $coreHelper->serialize($options) ?>}'>
+        <div class="mgz-block-content">
+                <div class="mgz-flick" data-mage-init='{"Magezon_PageBuilder/js/flickr":<?= $options ?>}'>
 			<div class="spinner-wrapper">
                 <div class="spinner"></div>
             </div>

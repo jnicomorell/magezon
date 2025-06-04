@@ -1,12 +1,16 @@
 <?php
-$coreHelper       = $this->helper('\Magezon\Core\Helper\Data');
-$elements         = $this->getELements();
-$count            = count($elements);
-$element          = $this->getElement();
-$title            = $coreHelper->filter($element->getData('title'));
-$titleAlign       = $element->getData('title_align');
-$titleTag         = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
-$description      = $coreHelper->filter($element->getData('description'));
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\PageBuilder\ViewModel\AccordionData $viewModel
+ */
+$viewModel       = $block->getViewModel();
+$elements        = $block->getELements();
+$count           = count($elements);
+$element         = $block->getElement();
+$title           = $viewModel->filter($element->getData('title'));
+$titleAlign      = $element->getData('title_align');
+$titleTag        = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
+$description     = $viewModel->filter($element->getData('description'));
 $showLine         = $element->getData('show_line');
 $hideEmptySection = $element->getData('hide_empty_section');
 $collapsibleAll   = $element->getData('collapsible_all') ? 'true' : 'false';

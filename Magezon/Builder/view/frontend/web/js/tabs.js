@@ -43,7 +43,7 @@ define([
                 });
             }
 
-            $tabsList.children().click(function(e) {
+            $tabsList.children().on('click', function(e) {
                 if ($(this).children('a').attr('href').indexOf('#') !== -1) {
                     e.preventDefault();
                     activeTab($(this).children('a'));
@@ -51,7 +51,7 @@ define([
                 }
             });
 
-            $tabsContent.children('.mgz-tabs-tab-title').click(function(e) {
+            $tabsContent.children('.mgz-tabs-tab-title').on('click', function(e) {
                 e.preventDefault();
                 activeTab($(this).children('a'));
                 return false;

@@ -1,7 +1,7 @@
 <?php
-$builderHelper = $this->helper('\Magezon\Builder\Helper\Data');
-$element       = $this->getElement();
-$items         = $this->toObjectArray($element->getData('items'));
+$builderHelper = $block->getDataHelper();
+$element       = $block->getElement();
+$items         = $block->toObjectArray($element->getData('items'));
 $onclick       = $element->getOnclick();
 $options       = [];
 $options['nav']                 = $element->getData('nav');

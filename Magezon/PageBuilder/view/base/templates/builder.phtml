@@ -1,24 +1,24 @@
 <?php
-$config            = $this->getBuilderConfig();
-$id                = $this->getHtmlId();
-$targetId          = $this->getTargetId();
-$additionalClasses = $this->getAdditionalClasses();
-$url               = $this->getUrl('mgzpagebuilder/product/wysiwyg');
+$config            = $block->getBuilderConfig();
+$id                = $block->getHtmlId();
+$targetId          = $block->getTargetId();
+$additionalClasses = $block->getAdditionalClasses();
+$url               = $block->getUrl('mgzpagebuilder/product/wysiwyg');
 ?>
 <div class="mgz-builder <?= $additionalClasses ?>" id="<?= $id ?>" ng-controller="magezonBuilderCtrl">
 	<magezon-builder profile="profile"></magezon-builder>
 </div>
 <style id="<?= $targetId ?>-styles"></style>
-<script type="text/javascript">
+<script>
 	window.magezonBuilder = {
-		viewFileUrl: '<?= $this->getBuilderViewFileUrl() ?>'
+		viewFileUrl: '<?= $block->getBuilderViewFileUrl() ?>'
 	}
 	require([
 		'jquery',
 		'angular',
 		'magezonBuilder',
 		'api-check'
-		<?= $this->getModulePaths() ?>
+		<?= $block->getModulePaths() ?>
 	], function($, angular, mgzBuilder, apiCheck) {
 		var parent = $('#<?= $targetId ?>').closest('.admin__field');
 		if (parent.parent().hasClass('admin__field-control')) {
@@ -28,9 +28,9 @@ $url               = $this->getUrl('mgzpagebuilder/product/wysiwyg');
 			$('#<?= $id ?>').width(width);
 		}
 		apiCheck.globalConfig.disabled = true;
-		var builderConfig = <?= $this->getSerializedBuilderConfig() ?>;
+		var builderConfig = <?= $block->getSerializedBuilderConfig() ?>;
 		window.builderConfig = builderConfig;
-		var app = angular.module('<?= $id ?>', ['magezonBuilder' <?= $this->getModuleKeys() ?>], function config(magezonBuilderConfigProvider, formlyConfigProvider) {
+		var app = angular.module('<?= $id ?>', ['magezonBuilder' <?= $block->getModuleKeys() ?>], function config(magezonBuilderConfigProvider, formlyConfigProvider) {
 			formlyConfigProvider.disableWarnings = true;
 			formlyConfigProvider.extras.removeChromeAutoComplete = true;
   			formlyConfigProvider.extras.explicitAsync = true;
@@ -85,12 +85,12 @@ $url               = $this->getUrl('mgzpagebuilder/product/wysiwyg');
 				parent.parent().addClass('mgz-builder-grouped-wrapper');
 			}
 			parent.find('.admin__field-control').eq(0).prepend('<button type="button" class="mgz-builder-action-btn mgz-builder-active-btn"><i class="mgz-icon mgz-icon-magezon-pagebuilder"></i><span><?= __('Active Magezon Page Builder') ?></span></button><button type="button" class="mgz-builder-action-btn mgz-builder-deactive-btn"><i class="mgz-icon mgz-icon-magezon-pagebuilder"></i><span><?= __('Deactivate Magezon Page Builder') ?></span></button><button type="button" onclick="magezonPageBuilderWysiwygEditor.open(\'<?= $url ?>\', \'<?= $targetId ?>\')" class="mgz-builder-wysiwyg-btn action-default"><span><?= __('WYSIWYG Editor') ?></span></button>');
-			$('.<?= $id ?>-wrapper .mgz-builder-active-btn').click(function(e) {
+			$('.<?= $id ?>-wrapper .mgz-builder-active-btn').on('click', function(e) {
 				$rootScope.$broadcast('importShortcode');
 				$('.<?= $id ?>-wrapper').addClass('mgz-deactive-builder');
 				$('.<?= $id ?>-wrapper').removeClass('mgz-active-builder');
 			});
-			$('.<?= $id ?>-wrapper .mgz-builder-deactive-btn').click(function(e) {
+			$('.<?= $id ?>-wrapper .mgz-builder-deactive-btn').on('click', function(e) {
 				$('.<?= $id ?>-wrapper').addClass('mgz-active-builder');
 				$('.<?= $id ?>-wrapper').removeClass('mgz-deactive-builder');
 				$rootScope.$broadcast('closeAllModals');

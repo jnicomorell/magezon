@@ -1,5 +1,9 @@
 <?php
-$dataHelper = $this->helper('\Magezon\Core\Helper\Data');
-$element    = $this->getElement();
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\PageBuilder\ViewModel\RawHtmlData $viewModel
+ */
+$viewModel = $block->getViewModel();
+$element = $block->getElement();
 ?>
-<?= $dataHelper->filter($element->getContent()) ?>
+<?= $viewModel->filter($element->getContent()) ?>

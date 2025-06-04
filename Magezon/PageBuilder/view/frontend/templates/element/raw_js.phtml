@@ -1,5 +1,10 @@
 <?php
-$element    = $this->getElement();
-$coreHelper = $this->helper('\Magezon\Core\Helper\Data');
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\PageBuilder\ViewModel\RawJs $viewModel
+ */
+$viewModel = $block->getViewModel();
+$element = $block->getElement();
 ?>
-<?= $coreHelper->filter($element->getContent()) ?>
+<?= $viewModel->getFilteredContent($element->getContent()) ?>
+

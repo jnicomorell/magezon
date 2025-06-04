@@ -1,16 +1,24 @@
 <?php
-$coreHelper = $this->helper('\Magezon\Core\Helper\Data');
-$element    = $this->getElement();
-$link       = $this->getLinkParams($element->getData('link_url'));
-$icon       = $element->getData('icon');
-$iconSize   = $element->getData('icon_size');
+/**
+ * @var \Magezon\PageBuilder\Block\Element\Icon $block
+ * @var \Magezon\PageBuilder\ViewModel\IconViewModel $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+$element  = $viewModel->getElement();
+$link     = $viewModel->getLinkParams($element->getData('link_url'));
+$icon     = $element->getData('icon');
+$iconSize = $element->getData('icon_size');
 ?>
-<div class="mgz-icon-wrapper mgz-icon-size-<?= $iconSize ?>">
-	<?php if ($link['url']) { ?>
-		<a href="<?= $link['url'] ?>" title="<?= $block->escapeHtml($link['title']) ?>" <?= $link['blank'] ? 'target="_blank"' : '' ?> <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
-	<?php } ?>
-		<i class="mgz-icon-element <?= $icon ?>"></i>	
-	<?php if ($link['url']) { ?>
-		</a>
-	<?php } ?>
+<div class="mgz-icon-wrapper mgz-icon-size-<?= $block->escapeHtmlAttr($iconSize) ?>">
+    <?php if (!empty($link['url'])) : ?>
+        <a href="<?= $block->escapeUrl($link['url']) ?>"
+           title="<?= $block->escapeHtmlAttr($link['title']) ?>"
+           <?= $link['blank'] ? 'target="_blank"' : '' ?>
+           <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+    <?php endif; ?>
+        <i class="mgz-icon-element <?= $block->escapeHtmlAttr($icon) ?>"></i>
+    <?php if (!empty($link['url'])) : ?>
+        </a>
+    <?php endif; ?>
 </div>

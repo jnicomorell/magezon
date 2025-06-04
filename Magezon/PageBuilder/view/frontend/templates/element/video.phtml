@@ -1,24 +1,27 @@
 <?php
-$coreHelper       = $this->helper('\Magezon\Core\Helper\Data');
-$builderHelper    = $this->helper('\Magezon\Builder\Helper\Data');
-$element          = $this->getElement();
-$title            = $coreHelper->filter($element->getData('title'));
+/**
+ * @var \Magezon\PageBuilder\Block\Element\Video $block
+ * @var \Magezon\PageBuilder\ViewModel\VideoViewModel $viewModel
+ */
+$viewModel = $block->getViewModel();
+$element   = $block->getElement();
+$title            = $viewModel->filter($element->getData('title'));
 $titleAlign       = $element->getData('title_align');
 $titleTag         = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
-$description      = $coreHelper->filter($element->getData('description'));
+$description      = $viewModel->filter($element->getData('description'));
 $showLine         = $element->getData('show_line');
 $link             = $block->getVideoLink();
 $showPreviewImage = $element->getData('show_preview_image');
 $lightBox         = $element->getData('lightbox');
 $aspectRatio      = $element->getData('aspect_ratio');
 $lazyLink         = '';
-$previewImage     = $builderHelper->getImageUrl($element->getData('preview_image'));
+$previewImage     = $viewModel->getImageUrl($element->getData('preview_image'));
 if ($showPreviewImage && $previewImage) {
 	$lazyLink = $link;
 	$link     = '';
 }
 $showPlayIcon     = $element->getData('show_play_icon');
-$playIcon         = $builderHelper->getImageUrl($element->getData('play_icon'));
+$playIcon         = $viewModel->getImageUrl($element->getData('play_icon'));
 $videoTitle       = $element->getData('video_title');
 $videoDescription = $element->getData('video_description');
 $controls         = $element->getData('controls');

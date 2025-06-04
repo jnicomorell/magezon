@@ -19,6 +19,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\DesignInterface;
 use Magezon\Core\Model\ProductListFactory;
 use Magezon\Core\Helper\Data as CoreHelper;
+use Magezon\PageBuilder\ViewModel\ProductSlider as ViewModel;
 
 /**
  * Product slider block for page builder.
@@ -56,6 +57,11 @@ class ProductSlider extends \Magezon\Builder\Block\ListProduct
     private $design;
 
     /**
+     * @var ViewModel
+     */
+    private ViewModel $viewModel;
+
+    /**
      * Constructor.
      *
      * @param HttpContext $httpContext
@@ -73,6 +79,7 @@ class ProductSlider extends \Magezon\Builder\Block\ListProduct
         DesignInterface $design,
         ProductListFactory $productListFactory,
         CoreHelper $coreHelper,
+        ViewModel $viewModel,
         array $data = []
     ) {
         parent::__construct($data);
@@ -82,6 +89,12 @@ class ProductSlider extends \Magezon\Builder\Block\ListProduct
         $this->design = $design;
         $this->productListFactory = $productListFactory;
         $this->coreHelper = $coreHelper;
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
     }
 
     /**
