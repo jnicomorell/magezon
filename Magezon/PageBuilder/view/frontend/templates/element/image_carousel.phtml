@@ -1,22 +1,23 @@
 <?php
-$coreHelper      = $this->helper('\Magezon\Core\Helper\Data');
-$builderHelper   = $this->helper('\Magezon\Builder\Helper\Data');
-$element         = $this->getElement();
-$title           = $coreHelper->filter($element->getData('title'));
+/** @var \Magezon\PageBuilder\Block\Element\ImageCarousel $block */
+/** @var \Magezon\PageBuilder\ViewModel\ImageCarouselData $viewModel */
+$viewModel = $block->getViewModel();
+$element         = $viewModel->getElement();
+$title           = $viewModel->filter($element->getData('title'));
 $titleAlign      = $element->getData('title_align');
 $titleTag        = $element->getData('title_tag');
-$description     = $coreHelper->filter($element->getData('description'));
+$description     = $viewModel->filter($element->getData('description'));
 $showLine        = $element->getData('show_line');
 $linePosition    = $element->getData('line_position');
-$items           = $this->toObjectArray($element->getItems());
+$items           = $viewModel->getItems();
 $onclick         = $element->getData('onclick');
 $lazyLoad        = $element->getData('owl_lazyload');
 $hoverEffect     = $element->getData('hover_effect');
 $displayOnHover  = $element->getData('display_on_hover');
 $overlayColor    = $element->getData('overlay_color');
-$carouselOptions = $this->getOwlCarouselOptions();
-$classes         = $this->getOwlCarouselClasses();
-$size            = $this->getsize();
+$carouselOptions = $viewModel->getOwlCarouselOptions();
+$classes         = $viewModel->getOwlCarouselClasses();
+$size            = $viewModel->getSize();
 $id              = time() . uniqid();
 $contentPosition = $element->getData('content_position') ? $element->getData('content_position') : 'middle-center';
 if ($contentPosition) $classes[] = 'image-content-' . $contentPosition;
@@ -42,25 +43,25 @@ if ($displayOnHover) $classes[] = 'item-content-hover';
 			<?php foreach ($items as $item) { ?>
 				<?php
 				if (!$item['image']) continue;
-				$title       = $coreHelper->filter($item['title']);
-				$description = $coreHelper->filter($item['description']);
-				$src         = $this->getImage($item['image']);
+                                $title       = $viewModel->filter($item['title']);
+                                $description = $viewModel->filter($item['description']);
+                                $src         = $viewModel->getImage($item['image']);
 				$link        = $linkTitle = $blank = $nofollow = '';
 				$popupType   = 'image';
 				if ($onclick) {
 					if ($onclick == 'magnific') {
 						if ($item['popup_image']) {
-							$link = $builderHelper->getImageUrl($item['popup_image']);
+                                                        $link = $viewModel->getImageUrl($item['popup_image']);
 						} else if ($item['video_map']) {
 							$link = $item['video_map'];
 							$popupType = 'iframe';
 						} else {
-							$link = $builderHelper->getImageUrl($item['image']);
+                                                        $link = $viewModel->getImageUrl($item['image']);
 						}
-						$linkTitle = $item['popup_title'] ? $coreHelper->filter($item['popup_title']) : $title;
+                                                $linkTitle = $item['popup_title'] ? $viewModel->filter($item['popup_title']) : $title;
 					}
 					if ($onclick == 'custom_link' && $item['custom_link']) {
-						$_link     = $this->getLinkParams($item['custom_link']);
+                                                $_link     = $block->getLinkParams($item['custom_link']);
 						$link      = $_link['url'];
 						$blank     = $_link['blank'];
 						$nofollow  = $_link['nofollow'];
@@ -101,7 +102,7 @@ if ($displayOnHover) $classes[] = 'item-content-hover';
 		</div>
 		<script>
 			require(['jquery', 'Magezon_Builder/js/carousel'], function($) {
-				$('#<?= $id ?>').carousel(<?= $coreHelper->serialize($carouselOptions) ?>);
+                                $('#<?= $id ?>').carousel(<?= $viewModel->serialize($carouselOptions) ?>);
 			});
 		</script>
 	<?php } ?>

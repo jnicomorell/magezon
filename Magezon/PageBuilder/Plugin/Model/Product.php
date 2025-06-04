@@ -28,7 +28,7 @@ class Product
     protected $dataPersistor;
 
     /**
-     * @var \Magento\Framework\App\RequestInterface
+     * @var \Magento\Framework\App\Request\Http
      */
     protected $request;
 
@@ -49,14 +49,14 @@ class Product
 
     /**
      * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
-     * @param \Magento\Framework\App\RequestInterface    $request
+     * @param \Magento\Framework\App\Request\Http    $request
      * @param \Magento\Framework\View\LayoutInterface    $layout
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magezon\PageBuilder\Helper\Data           $dataHelper
      */
     public function __construct(
         \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
-        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Framework\App\Request\Http $request,
         \Magento\Framework\View\LayoutInterface $layout,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magezon\PageBuilder\Helper\Data $dataHelper
