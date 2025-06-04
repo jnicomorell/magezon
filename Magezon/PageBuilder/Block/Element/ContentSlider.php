@@ -14,8 +14,26 @@
 
 namespace Magezon\PageBuilder\Block\Element;
 
+use Magento\Framework\View\Element\Template\Context;
+use Magezon\PageBuilder\ViewModel\ContentSlider as ViewModel;
+
 class ContentSlider extends \Magezon\Builder\Block\Element
 {
+    private ViewModel $viewModel;
+
+    public function __construct(
+        Context $context,
+        ViewModel $viewModel,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
+        $this->viewModel = $viewModel;
+    }
+
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
+    }
     /**
      * @return string
      */
