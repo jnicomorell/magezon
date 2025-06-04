@@ -1,6 +1,6 @@
 <?php
-$element      = $this->getElement();
-$items        = $this->toObjectArray($element->getData('items'));
+$element      = $block->getElement();
+$items        = $block->toObjectArray($element->getData('items'));
 $speed        = ((float) $element->getData('speed')) * 1000;
 $delay        = (float) $element->getData('delay');
 $unit         = $element->getData('units');
