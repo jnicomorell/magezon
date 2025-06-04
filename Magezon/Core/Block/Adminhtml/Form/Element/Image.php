@@ -120,7 +120,7 @@ class Image extends AbstractElement
 
         $html .= '<script>
             require(["jquery", "Magezon_Core/js/mage/browser"], function($) {
-                $("#' . $htmlId . '-preview_image").click(function(e) {
+                $("#' . $htmlId . '-preview_image").on('click', function(e) {
                     var win = window.open("", "preview", "width=500,height=500,resizable=1,scrollbars=1");
                     win.document.open();
                     win.document.write("<body style=\"padding:0;margin:0\"><img src=\'"+$(this).find(\"img\").eq(0).attr(\"src\")+"\' id=\"image_preview\"/></body>");

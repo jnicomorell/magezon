@@ -186,7 +186,7 @@ define([
 	    		self.getHeaderSelector().addClass('mgz-draggable-handle');
 		    }
 		    self.resizeInner();
-		    self.getModalSelector().find('.mgz-modal-tab > .nav.nav-tabs > li > a').click(function(e) {
+                    self.getModalSelector().find('.mgz-modal-tab > .nav.nav-tabs > li > a').on('click', function(e) {
 				self.resizeInner();
 			});
 			setTimeout(function() {

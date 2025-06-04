@@ -1,17 +1,21 @@
 <?php
-$coreHelper      = $this->helper('\Magezon\Core\Helper\Data');
-$builderHelper   = $this->helper('\Magezon\Builder\Helper\Data');
-$element         = $this->getElement();
+/**
+ * @var \Magezon\PageBuilder\Block\Element\Testimonials $block
+ * @var \Magezon\PageBuilder\ViewModel\Testimonials $viewModel
+ */
+$viewModel       = $block->getViewModel();
+
+$element         = $block->getElement();
 $testimonialTyle = $element->getData('testimonial_type');
 $imageWidth      = $element->getData('image_width');
 $imageHeight     = $element->getData('image_height');
-$items           = $this->toObjectArray($element->getData('items'));
-$carouselOptions = $this->getOwlCarouselOptions();
-$classes         = $this->getOwlCarouselClasses();
+$items           = $block->toObjectArray($element->getData('items'));
+$carouselOptions = $block->getOwlCarouselOptions();
+$classes         = $block->getOwlCarouselClasses();
 ?>
-<div class="mgz-testimonials mgz-testimonials-<?= $testimonialTyle ?> mgz-carousel owl-carousel <?= implode(' ', $classes) ?>" data-mage-init='{"Magezon_Builder/js/carousel":<?= $coreHelper->serialize($carouselOptions) ?>}'>
-	<?php foreach ($items as $i => $item) { ?>
-		<?php $image = $builderHelper->getImageUrl($item['image']); ?>
+<div class="mgz-testimonials mgz-testimonials-<?= $block->escapeHtmlAttr($testimonialTyle) ?> mgz-carousel owl-carousel <?= implode(' ', $classes) ?>" data-mage-init='{"Magezon_Builder/js/carousel":<?= $viewModel->getSerializedOptions($carouselOptions) ?>}'>
+        <?php foreach ($items as $i => $item) { ?>
+                <?php $image = $viewModel->getImageUrl($item['image']); ?>
 		<div class="mgz-testimonial mgz-testimonial<?= $i ?>">
 			<?php if ($testimonialTyle == 'type1') { ?>
 				<?php if ($image) { ?>
@@ -19,7 +23,7 @@ $classes         = $this->getOwlCarouselClasses();
 						<img src="<?= $image ?>" alt="<?= $block->escapeHtml($item['name']) ?>" <?= $imageWidth ? 'width="' . $imageWidth . '"' : '' ?> <?= $imageHeight ? 'height="' . $imageHeight . '"' : '' ?>/>
 					</div>
 				<?php } ?>
-				<div class="mgz-testimonial-content"><?= $coreHelper->filter($item['content']) ?></div>
+                                <div class="mgz-testimonial-content"><?= $viewModel->filter($item['content']) ?></div>
 				<div class="mgz-testimonial-meta">
 					<?php if ($item['name'] || $item['job']) { ?>
 						<div class="mgz-testimonial-details">
@@ -40,8 +44,8 @@ $classes         = $this->getOwlCarouselClasses();
 					<?php } ?>
 				</div>
 			<?php } ?>
-			<?php if ($testimonialTyle == 'type2') { ?>
-				<div class="mgz-testimonial-content"><?= $coreHelper->filter($item['content']) ?></div>
+                        <?php if ($testimonialTyle == 'type2') { ?>
+                                <div class="mgz-testimonial-content"><?= $viewModel->filter($item['content']) ?></div>
 				<div class="mgz-testimonial-meta">
 					<?php if ($image) { ?>
 						<div class="mgz-testimonial-image">
@@ -68,8 +72,8 @@ $classes         = $this->getOwlCarouselClasses();
 					<?php } ?>
 				</div>
 			<?php } ?>
-			<?php if ($testimonialTyle == 'type3') { ?>
-				<div class="mgz-testimonial-content"><?= $coreHelper->filter($item['content']) ?></div>
+                        <?php if ($testimonialTyle == 'type3') { ?>
+                                <div class="mgz-testimonial-content"><?= $viewModel->filter($item['content']) ?></div>
 				<div class="mgz-testimonial-meta">
 					<?php if ($image) { ?>
 						<span class="mgz-testimonial-image">
