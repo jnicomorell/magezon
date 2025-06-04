@@ -21,10 +21,11 @@ class Product
      */
     protected $_cache;
 
+
     /**
-     * @var \Magento\Framework\Registry
+     * @var \Magento\Framework\App\Request\DataPersistorInterface
      */
-    protected $registry;
+    protected $dataPersistor;
 
     /**
      * @var \Magento\Framework\App\RequestInterface
@@ -47,20 +48,20 @@ class Product
     protected $dataHelper;
 
     /**
-     * @param \Magento\Framework\Registry                $registry
+     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
      * @param \Magento\Framework\App\RequestInterface    $request
      * @param \Magento\Framework\View\LayoutInterface    $layout
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magezon\PageBuilder\Helper\Data           $dataHelper
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
+        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\View\LayoutInterface $layout,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magezon\PageBuilder\Helper\Data $dataHelper
     ) {
-        $this->registry     = $registry;
+        $this->dataPersistor = $dataPersistor;
         $this->request      = $request;
         $this->layout       = $layout;
         $this->storeManager = $storeManager;
@@ -74,6 +75,7 @@ class Product
         $index = null
     ) {
         $valid = true;
+        $this->dataPersistor->set('current_product', $subject);
         $result = $proceed($key, $index);
         $defaultLayoutHandle = $this->getDefaultLayoutHandle();
         if ($defaultLayoutHandle == 'catalog_product_view') {
@@ -101,6 +103,6 @@ class Product
      */
     public function getDefaultLayoutHandle()
     {
-        return strtolower($this->request->getFullActionName());
+        return strtolower($this->request->getFullActionName('-'));
     }
 }
