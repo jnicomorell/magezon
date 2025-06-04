@@ -22,12 +22,7 @@ class Category
     protected $_cache;
 
     /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
-    /**
-     * @var \Magento\Framework\App\RequestInterface
+     * @var \Magento\Framework\App\Request\Http
      */
     protected $request;
 
@@ -47,20 +42,17 @@ class Category
     protected $dataHelper;
 
     /**
-     * @param \Magento\Framework\Registry                $registry
-     * @param \Magento\Framework\App\RequestInterface    $request
+     * @param \Magento\Framework\App\Request\Http       $request
      * @param \Magento\Framework\View\LayoutInterface    $layout
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magezon\PageBuilder\Helper\Data           $dataHelper
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Framework\App\Request\Http $request,
         \Magento\Framework\View\LayoutInterface $layout,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magezon\PageBuilder\Helper\Data $dataHelper
     ) {
-        $this->registry     = $registry;
         $this->request      = $request;
         $this->layout       = $layout;
         $this->storeManager = $storeManager;
