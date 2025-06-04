@@ -1,6 +1,8 @@
 <?php
-$coreHelper    = $this->helper('\Magezon\Core\Helper\Data');
-$element       = $this->getElement();
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magezon\PageBuilder\ViewModel\ToggleData $viewModel */
+$viewModel     = $block->getViewModel();
+$element       = $block->getElement();
 $toggleTitle   = $element->getData('toggle_title');
 $toggleContent = $element->getData('toggle_content');
 $icon          = $element->getData('icon');
@@ -26,7 +28,7 @@ if ($iconStyle =='text_only') $icon = $activeIcon = '';
     <?php } ?>
     <?php if ($toggleContent) { ?>
         <div class="mgz-toggle-content" data-role="content" <?php if (!$open) { ?>style="display: none;"<?php } ?>>
-            <?= $coreHelper->filter($toggleContent) ?>
+            <?= $viewModel->getFilteredContent($toggleContent) ?>
         </div>
     <?php } ?>
 </div>
