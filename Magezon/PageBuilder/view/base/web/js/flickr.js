@@ -29,7 +29,7 @@ define([
                 showPhotoTitle: this.options.showPhotoTitle
             });
 
-            this.element.click(function(event) {
+            this.element.on('click', function(event) {
                 event = event || window.event;
                 var target = event.target || event.srcElement,
                     link = target.src ? target.parentNode : target,

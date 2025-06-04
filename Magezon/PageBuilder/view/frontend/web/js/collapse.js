@@ -31,7 +31,7 @@ define([
             }
 
             $panelList.each(function(index, el) {
-                $(this).children('.mgz-panel-heading').find('a').click(function(event) {
+                $(this).children('.mgz-panel-heading').find('a').on('click', function(event) {
                     if (self.options.atLeastOneOpen) {
                         if ($(this).parents('.mgz-panel.mgz-active').length) return false;
                     }

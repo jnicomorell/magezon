@@ -46,7 +46,7 @@ define([
 			}
 		},
 		link: function(scope, element, attrs, $select) {
-            element.find('.mgz-selector-button').click(function(event) {
+            element.find('.mgz-selector-button').on('click', function(event) {
             	if (scope.listVisible) {
             		setTimeout(function () {
             			$(element).find('.ui-select-toggle').first().trigger('click');

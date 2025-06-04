@@ -186,9 +186,9 @@ define([
 	    		self.getHeaderSelector().addClass('mgz-draggable-handle');
 		    }
 		    self.resizeInner();
-		    self.getModalSelector().find('.mgz-modal-tab > .nav.nav-tabs > li > a').click(function(e) {
-				self.resizeInner();
-			});
+                    self.getModalSelector().find('.mgz-modal-tab > .nav.nav-tabs > li > a').on('click', function(e) {
+                        self.resizeInner();
+                    });
 			setTimeout(function() {
 				self.getModalSelector().find('.mgz-modal-tab > .tab-content').scroll(function(e) {
 					$('.sp-active').siblings('.colorpicker-spectrum').spectrum("hide");
