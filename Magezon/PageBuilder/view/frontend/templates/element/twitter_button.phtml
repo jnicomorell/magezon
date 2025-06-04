@@ -1,5 +1,5 @@
 <?php
-$element    = $this->getElement();
+$element    = $block->getElement();
 $type       = $element->getButtonType();
 $attributes = [];
 $href = $attrs = $text = '';
@@ -59,7 +59,7 @@ switch ($type) {
 		}
 		break;
 }
-$attrs = $this->parseAttributes($attributes);
+$attrs = $block->parseAttributes($attributes);
 ?>
 
 <?php if ($href) { ?>
