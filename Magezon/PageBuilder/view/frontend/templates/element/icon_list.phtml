@@ -1,16 +1,21 @@
 <?php
-$coreHelper = $this->helper('\Magezon\Core\Helper\Data');
-$element    = $this->getElement();
-$layout     = $element->getData('layout');
-$items      = $this->toObjectArray($element->getItems());
+/**
+ * @var \Magezon\PageBuilder\Block\Element\IconList $block
+ * @var \Magezon\PageBuilder\ViewModel\IconList $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+$element = $block->getElement();
+$layout  = $element->getData('layout');
+$items   = $block->toObjectArray($element->getItems());
 ?>
 <div class="mgz-icon-list mgz-icon-list-<?= $layout ?>">
-	<?php if ($items && count($items)) { ?>
-		<?php foreach ($items as $item) { ?>
-			<?php
-			$link     = $this->getLinkParams($item['link_url']);
-			$linkText = $coreHelper->filter($item['link_text']);
-			?>
+        <?php if ($items && count($items)) { ?>
+                <?php foreach ($items as $item) { ?>
+                        <?php
+                        $link     = $block->getLinkParams($item['link_url']);
+                        $linkText = $viewModel->getFilteredText($item['link_text']);
+                        ?>
 			<div class="mgz-icon-list-item">
 				<?php if ($link['url']) { ?>
 					<a href="<?= $link['url'] ?>" title="<?= $block->escapeHtml($link['title']) ?>" <?= $link['blank'] ? 'target="_blank"' : '' ?> <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
