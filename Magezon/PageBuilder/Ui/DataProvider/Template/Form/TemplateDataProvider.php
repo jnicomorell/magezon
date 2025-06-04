@@ -16,6 +16,8 @@ namespace Magezon\PageBuilder\Ui\DataProvider\Template\Form;
 
 use Magezon\PageBuilder\Model\ResourceModel\Template\CollectionFactory;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\App\RequestInterface;
+use Magezon\PageBuilder\Api\TemplateRepositoryInterface;
 
 class TemplateDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
@@ -35,15 +37,21 @@ class TemplateDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     protected $dataPersistor;
 
     /**
-     * @var \Magento\Framework\Registry
+     * @var RequestInterface
      */
-    protected $registry;
+    protected $request;
+
+    /**
+     * @var TemplateRepositoryInterface
+     */
+    protected $templateRepository;
 
     /**
      * @param string                      $name
      * @param string                      $primaryFieldName
      * @param string                      $requestFieldName
-     * @param \Magento\Framework\Registry $registry
+     * @param RequestInterface            $request
+     * @param TemplateRepositoryInterface $templateRepository
      * @param CollectionFactory           $templateCollectionFactory
      * @param DataPersistorInterface      $dataPersistor
      * @param array                       $meta
@@ -53,14 +61,16 @@ class TemplateDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $name,
         $primaryFieldName,
         $requestFieldName,
-        \Magento\Framework\Registry $registry,
+        RequestInterface $request,
+        TemplateRepositoryInterface $templateRepository,
         CollectionFactory $templateCollectionFactory,
         DataPersistorInterface $dataPersistor,
         array $meta = [],
         array $data = []
     ) {
         $this->collection    = $templateCollectionFactory->create();
-        $this->registry      = $registry;
+        $this->request       = $request;
+        $this->templateRepository = $templateRepository;
         $this->dataPersistor = $dataPersistor;
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
         $this->meta = $this->prepareMeta($this->meta);
@@ -93,24 +103,32 @@ class TemplateDataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             $this->loadedData[$template->getId()] = $template->getData();
         }
 
-        $data = $this->dataPersistor->get('current_template');
-        if (!empty($data)) {
-            $template = $this->collection->getNewEmptyItem();
-            $template->setData($data);
-            $this->loadedData[$template->getId()] = $template->getData();
-            $this->dataPersistor->clear('current_template');
-        }
-
         return $this->loadedData;
     }
 
     /**
-     * Get current template
+     * Retrieve current template either from data persistor or repository.
      *
-     * @return \Magezon\PageBuilder\Model\Template
+     * @return \Magezon\PageBuilder\Model\Template|null
      */
     public function getCurrentTemplate()
     {
-        return $this->registry->registry('current_template');
+        $data = $this->dataPersistor->get('current_template');
+        if (!empty($data)) {
+            $template = $this->collection->getNewEmptyItem();
+            $template->setData($data);
+            $this->dataPersistor->clear('current_template');
+            return $template;
+        }
+
+        $templateId = (string) $this->request->getParam('template_id');
+        if ($templateId) {
+            try {
+                return $this->templateRepository->getById($templateId);
+            } catch (\Exception $e) {
+                return null;
+            }
+        }
+        return null;
     }
 }
