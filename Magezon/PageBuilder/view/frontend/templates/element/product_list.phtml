@@ -1,16 +1,17 @@
 <?php
+/** @var \Magezon\PageBuilder\Block\Element\ProductList $block */
+/** @var \Magezon\PageBuilder\ViewModel\ProductListData $viewModel */
 use Magento\Framework\App\Action\Action;
 
-$coreHelper           = $this->helper('\Magezon\Core\Helper\Data');
-$compareHelper        = $this->helper('Magento\Catalog\Helper\Product\Compare');
-$element              = $this->getElement();
-$title                = $coreHelper->filter($element->getData('title'));
+$viewModel           = $block->getViewModel();
+$element             = $block->getElement();
+$title               = $viewModel->filter($element->getData('title'));
 $titleAlign           = $element->getData('title_align');
 $titleTag             = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
-$description          = $coreHelper->filter($element->getData('description'));
+$description          = $viewModel->filter($element->getData('description'));
 $showLine             = $element->getData('show_line');
 $linePosition         = $element->getData('line_position');
-$items                = $this->getItems();
+$items                = $block->getItems();
 $imageId              = 'category_page_list';
 $templateType         = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
 $showImage            = $element->getData('product_image');
@@ -63,7 +64,7 @@ $htmlId               = $element->getHtmlId();
 
 							<?= $showPrice ? $block->getProductPrice($_product) : '' ?>
 
-							<?= $swatches ? $this->getSwatchesHtml($_product) : '' ?>
+                                                        <?= $swatches ? $block->getSwatchesHtml($_product) : '' ?>
 
 							<?php if ($showWishlist || $showCompare || $showCart) { ?>
 								<div class="product-item-actions">
@@ -96,7 +97,7 @@ $htmlId               = $element->getHtmlId();
 									<?php } ?>
 									<?php if ($showWishlist || $showCompare) { ?>
 										<div class="actions-secondary" data-role="add-to-links">
-											<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $showWishlist) { ?>
+                                                                        <?php if ($viewModel->isWishlistAllowed() && $showWishlist) { ?>
 												<a href="#"
 													data-post='<?= $block->getAddToWishlistParams($_product) ?>'
 													class="action towishlist" data-action="add-to-wishlist"
@@ -106,7 +107,7 @@ $htmlId               = $element->getHtmlId();
 											<?php } ?>
 											<?php if ($block->getAddToCompareUrl() && $showCompare) { ?>
 												<a href="#" class="action tocompare"
-													data-post='<?= $compareHelper->getPostDataParams($_product) ?>'
+                                                                               data-post='<?= $viewModel->getComparePostData($_product) ?>'
 													title="<?= __('Add to Compare') ?>">
 													<span><?= __('Add to Compare') ?></span>
 												</a>
@@ -118,7 +119,7 @@ $htmlId               = $element->getHtmlId();
 
 							<?php if ($showShortDescription) { ?>
 								<div class="product description product-item-description">
-									<?= $coreHelper->filter($_product->getShortDescription()) ?>
+                                                                        <?= $viewModel->filter($_product->getShortDescription()) ?>
 									<a href="<?= $_product->getProductUrl() ?>" title="<?= $_productNameStripped ?>"
                                        class="action more"><?= __('Learn More') ?></a>
 								</div>

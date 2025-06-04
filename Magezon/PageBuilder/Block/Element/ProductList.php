@@ -19,6 +19,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\DesignInterface;
 use Magezon\Core\Model\ProductList as ProdList;
 use Magezon\Core\Helper\Data as CoreHelper;
+use Magezon\PageBuilder\ViewModel\ProductListData as ViewModel;
 
 /**
  * Product list block for page builder.
@@ -56,6 +57,11 @@ class ProductList extends \Magezon\Builder\Block\ListProduct
     private $design;
 
     /**
+     * @var ViewModel
+     */
+    private ViewModel $viewModel;
+
+    /**
      * Constructor.
      *
      * @param HttpContext $httpContext
@@ -73,6 +79,7 @@ class ProductList extends \Magezon\Builder\Block\ListProduct
         DesignInterface $design,
         ProdList $productList,
         CoreHelper $coreHelper,
+        ViewModel $viewModel,
         array $data = []
     ) {
         parent::__construct($data);
@@ -82,6 +89,7 @@ class ProductList extends \Magezon\Builder\Block\ListProduct
         $this->design = $design;
         $this->productList = $productList;
         $this->coreHelper = $coreHelper;
+        $this->viewModel = $viewModel;
     }
 
     /**
@@ -143,5 +151,13 @@ class ProductList extends \Magezon\Builder\Block\ListProduct
     public function getAdditionalStyleHtml(): string
     {
         return $this->getLineStyles();
+    }
+
+    /**
+     * Return view model instance.
+     */
+    public function getViewModel(): ViewModel
+    {
+        return $this->viewModel;
     }
 }
