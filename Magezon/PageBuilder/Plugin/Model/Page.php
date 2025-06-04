@@ -21,10 +21,6 @@ class Page
      */
     protected $_cache;
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
 
     /**
      * @var \Magento\Framework\App\RequestInterface
@@ -47,20 +43,17 @@ class Page
     protected $dataHelper;
 
     /**
-     * @param \Magento\Framework\Registry                $registry
      * @param \Magento\Framework\App\RequestInterface    $request
      * @param \Magento\Framework\View\LayoutInterface    $layout
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magezon\PageBuilder\Helper\Data           $dataHelper
      */
     public function __construct(
-        \Magento\Framework\Registry $registry,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\View\LayoutInterface $layout,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magezon\PageBuilder\Helper\Data $dataHelper
     ) {
-        $this->registry     = $registry;
         $this->request      = $request;
         $this->layout       = $layout;
         $this->storeManager = $storeManager;
@@ -101,6 +94,10 @@ class Page
      */
     public function getDefaultLayoutHandle()
     {
-        return strtolower($this->request->getFullActionName());
+        $moduleName  = $this->request->getModuleName();
+        $controller  = $this->request->getControllerName();
+        $action      = $this->request->getActionName();
+
+        return strtolower($moduleName . '_' . $controller . '_' . $action);
     }
 }
