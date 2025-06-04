@@ -1,6 +1,10 @@
 <?php
-$element = $this->getElement();
-$items   = $this->toObjectArray($element->getData('items'));
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magezon\PageBuilder\ViewModel\PricingTableData $viewModel */
+$viewModel = $block->getViewModel();
+
+$element = $block->getElement();
+$items   = $viewModel->toObjectArray($element->getData('items'));
 $type    = $element->getData('table_type');
 ?>
 <div class="mgz-pricing-table-wrapper mgz-pricing-table-<?= $type ?>">
@@ -8,8 +12,8 @@ $type    = $element->getData('table_type');
 		<?php
 		$title      = $item->getData('title');
 		$subTitle   = $item->getData('sub_title');
-		$features   = $this->toObjectArray($item['features']);
-		$link       = $this->getLinkParams($item->getData('button_link'));
+                $features   = $viewModel->toObjectArray($item['features']);
+                $link       = $viewModel->getLinkParams($item->getData('button_link'));
 		$buttonText = $item->getData('button_text');
 		$price      = $item->getData('price');
 		$currency   = $item->getData('currency');
