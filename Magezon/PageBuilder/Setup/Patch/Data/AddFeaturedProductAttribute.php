@@ -15,13 +15,12 @@
 namespace Magezon\PageBuilder\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Framework\Setup\Patch\PatchVersionInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Api\AttributeRepositoryInterface;
 
-class AddFeaturedProductAttribute implements DataPatchInterface, PatchVersionInterface
+class AddFeaturedProductAttribute implements DataPatchInterface
 {
     /**
      * @var ModuleDataSetupInterface
@@ -114,14 +113,6 @@ class AddFeaturedProductAttribute implements DataPatchInterface, PatchVersionInt
     public static function getDependencies()
     {
         return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getVersion()
-    {
-        return '2.0.0';
     }
 
     /**
