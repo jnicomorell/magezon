@@ -23,7 +23,5 @@
 	<type name="Magento\Cms\Model\Page">
 		<plugin name="filter_page_attributes" type="Magezon\PageBuilder\Plugin\Model\Page" />
 	</type>
-    <type name="Magento\Contact\Controller\Index\Post">
-        <plugin name="contact_form" type="Magezon\PageBuilder\Plugin\Contact\Controller\Index\Post" />
-    </type>
+    <!-- Redirect contact form submissions originating from PageBuilder via event observer -->
 </config>
