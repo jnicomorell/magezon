@@ -79,7 +79,7 @@ class Save extends Action
      */
     public function execute()
     {
-        $data = $this->request->getPostValue();
+        $data = $this->getRequest()->getPostValue();
         $redirectBack = $this->request->getParam('back', false);
         /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
