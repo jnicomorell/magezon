@@ -1,18 +1,18 @@
 <?php
-$coreHelper          = $this->helper('\Magezon\Core\Helper\Data');
-$element             = $this->getElement();
-$title               = $coreHelper->filter($element->getData('title'));
+$viewModel          = $block->getViewModel();
+$element             = $block->getElement();
+$title               = $viewModel->filter($element->getData('title'));
 $titleAlign          = $element->getData('title_align');
 $titleTag            = $element->getData('title_tag') ? $element->getData('title_tag') : 'h2';
-$description         = $coreHelper->filter($element->getData('description'));
+$description         = $viewModel->filter($element->getData('description'));
 $showLine            = $element->getData('show_line');
 $linePosition        = $element->getData('line_position');
 $_items              = $block->getReviewsCollection()->getItems();
 $total               = count($_items);
 $format              = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
 $imageId             = 'new_products_images_only_widget';
-$carouselOptions     = $this->getOwlCarouselOptions();
-$classes             = $this->getOwlCarouselClasses();
+$carouselOptions     = $block->getOwlCarouselOptions();
+$classes             = $block->getOwlCarouselClasses();
 $reviewCustomer      = $element->getData('review_customer');
 $reviewDate          = $element->getData('review_date');
 $reviewTitle         = $element->getData('review_title');
@@ -34,7 +34,7 @@ $reviewContent       = $element->getData('review_content');
 	</div>
 	<?php } ?>
 	<div class="mgz-block-content">
-		<ul class="mgz-recent-reviews-items mgz-carousel owl-carousel <?= implode(' ', $classes) ?>" data-mage-init='{"Magezon_Builder/js/carousel":<?= $coreHelper->serialize($carouselOptions) ?>}'>
+		<ul class="mgz-recent-reviews-items mgz-carousel owl-carousel <?= implode(' ', $classes) ?>" data-mage-init='{"Magezon_Builder/js/carousel":<?= $viewModel->serialize($carouselOptions) ?>}'>
 	        <?php $x = 0; ?>
 	        <?php foreach ($_items as $_review) { ?>
 		        <?php $_product = $_review->getProduct(); ?>
@@ -67,7 +67,7 @@ $reviewContent       = $element->getData('review_content');
 	                    	<?php if ($_product) { ?>
 	                    		<a href="<?= $_product->getProductUrl() ?>#review-form">
 	                    	<?php } ?>
-	                    	<?= $this->escapeHtml($_review->getTitle()) ?>
+	                    	<?= $block->escapeHtml($_review->getTitle()) ?>
 	                    	<?php if ($_product) { ?>
 	                    		</a>
 	                    	<?php } ?>
@@ -82,19 +82,19 @@ $reviewContent       = $element->getData('review_content');
 		            <?php } ?>
 	                <?php if ($_product && $reviewProductName) { ?>
 		                <div class="mgz-review-product">
-		                    <a href="<?= $_product->getProductUrl() ?>#review-form" title="<?= $this->escapeHtml($_product->getName()) ?>"><?= $_product->getName() ?></a>
+		                    <a href="<?= $_product->getProductUrl() ?>#review-form" title="<?= $block->escapeHtml($_product->getName()) ?>"><?= $_product->getName() ?></a>
 		                </div>
 		            <?php } ?>
 	                <?php if ($_product && $reviewProductImage) { ?>
-		                <a href="<?= $_product->getProductUrl() ?>#review-form" title="<?= $this->escapeHtml($_product->getName()) ?>" class="product-image img">
+		                <a href="<?= $_product->getProductUrl() ?>#review-form" title="<?= $block->escapeHtml($_product->getName()) ?>" class="product-image img">
 							<?= $block->getImage($_product, $imageId)->toHtml() ?>
 						</a>
 					<?php } ?>
 					<?php if ($reviewContent) { ?>
 	                <div class="mgz-review-content">
 	                	<?php
-                                                $detail  = $_review->getData('detail');
-						$content = $this->getReviewContent($_review);
+						$detail  = $_review->getDetail();
+						$content = $block->getReviewContent($_review);
 	                	?>
 	                	<div class="<?= ($detail !== $content) ? 'mgz-review-content-short' : '' ?>"><?= $content ?> 
 	                		<?php if ($detail !== $content) { ?><a href="#" class="mgz-review-content-more"><?= __('View more') ?></a><?php } ?>
