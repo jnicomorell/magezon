@@ -17,9 +17,6 @@
 	<type name="Magento\Framework\Filter\Template">
 		<plugin name="magezonbuilder" type="\Magezon\PageBuilder\Plugin\Filter\Template" />
 	</type>
-	<type name="Magento\Catalog\Helper\Output">
-		<plugin name="magezonbuilder" type="\Magezon\PageBuilder\Plugin\Helper\Output" />
-	</type>
 	<type name="Magezon\Builder\Model\CompositeConfigProvider">
 		<arguments>
 			<argument name="configProviders" xsi:type="array">
@@ -657,7 +654,10 @@
 			</argument>
 		</arguments>
 	</type>
-	<type name="Magento\Catalog\Model\Indexer\Category\Flat\AbstractAction">
-		<plugin name="magezonbuilder" type="\Magezon\PageBuilder\Plugin\Model\Indexer\Category\Flat\AbstractAction" />
-	</type>
+        <type name="Magento\Catalog\Model\Indexer\Category\Flat\Action\Full">
+                <plugin name="magezonbuilder_columns" type="\Magezon\PageBuilder\Plugin\Model\Indexer\Category\Flat\AbstractAction" />
+        </type>
+        <type name="Magento\Catalog\Model\Indexer\Category\Flat\Action\Rows">
+                <plugin name="magezonbuilder_columns" type="\Magezon\PageBuilder\Plugin\Model\Indexer\Category\Flat\AbstractAction" />
+        </type>
 </config>
