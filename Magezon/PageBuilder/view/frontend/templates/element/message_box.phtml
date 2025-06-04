@@ -1,11 +1,16 @@
 <?php
-$element    = $this->getElement();
-$coreHelper = $this->helper('\Magezon\Core\Helper\Data');
-$boxStyle   = $element->getData('message_box_style');
-$boxShape   = $element->getData('message_box_shape');
-$icon       = $element->getData('icon');
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\PageBuilder\ViewModel\MessageBoxData $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+$element  = $block->getElement();
+$boxStyle = $element->getData('message_box_style');
+$boxShape = $element->getData('message_box_shape');
+$icon     = $element->getData('icon');
 ?>
-<div class="mgz-message-box mgz-message-box-<?= $boxStyle ?> mgz-message-box-<?= $boxShape ?>">
-	<div class="mgz-message-box-icon"><i class="<?= $icon ?>"></i></div>
-	<div class="mgz-message-box-content"><?= $coreHelper->filter($element->getContent()) ?></div>
+<div class="mgz-message-box mgz-message-box-<?= $block->escapeHtmlAttr($boxStyle) ?> mgz-message-box-<?= $block->escapeHtmlAttr($boxShape) ?>">
+    <div class="mgz-message-box-icon"><i class="<?= $block->escapeHtmlAttr($icon) ?>"></i></div>
+    <div class="mgz-message-box-content"><?= $viewModel->getFilteredContent($element->getContent()) ?></div>
 </div>
