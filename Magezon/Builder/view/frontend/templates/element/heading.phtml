@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\Builder\ViewModel\HeadingViewModel $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+$element     = $viewModel->getElement();
+$headingType = $element->getData('heading_type');
+$text        = $viewModel->getFilteredText($element->getData('text'));
+$link        = $viewModel->getLinkParams($element->getData('link'));
+$fontSize    = $element->getData('font_size');
+?>
+<?php if ($text) : ?>
+	<<?= $headingType ?> class="mgz-element-heading-text"
+	<?php if ($fontSize) : ?>
+		data-inline-fontsize="true"
+		data-fontsize="<?= $fontSize ?>"
+	<?php endif; ?>>
+	<?php if (!empty($link['url'])) : ?>
+		<a href="<?= $link['url'] ?>"
+		   title="<?= $block->escapeHtml($link['title']) ?>"
+		   <?= $link['blank'] ? 'target="_blank"' : '' ?>
+		   <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+	<?php endif; ?>
+		<?= $text ?>
+	<?php if (!empty($link['url'])) : ?>
+		</a>
+	<?php endif; ?>
+	</<?= $headingType ?>>
+<?php endif; ?>

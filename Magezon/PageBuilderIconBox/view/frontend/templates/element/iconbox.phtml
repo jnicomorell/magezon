@@ -1,0 +1,128 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Magezon\PageBuilderIconBox\ViewModel\IconBoxData $viewModel */
+
+$element = $block->getElement();
+$title = $viewModel->getFilteredTitle($element->getData());
+$link = $viewModel->getLinkParams($element->getData('link'));
+$linkButton = $viewModel->getLinkParams($element->getData('button_link'));
+$description = $element->getData('description');
+$titleType = $element->getData('title_type');
+$fontSize = $element->getData('font_size');
+$icon = $element->getData('icon');
+$iconSize = $element->getData('icon_size');
+$buttonTitle = $element->getData('button_title');
+$btnStyle = $element->getData('button_style');
+$btnSize = $element->getData('button_size');
+$onclickCode = $element->getData('onclick_code');
+$addButtonIcon = $element->getData('add_icon');
+$addButton = $element->getData('add_button');
+$iconPosition = $element->getData('icon_position');
+$iconButtonPosition = $element->getData('icon_button_position');
+$iconButton = $element->getData('icon_button');
+$displayAsLink = $element->getData('display_as_link');
+?>
+
+<div class="mgz-icon-box-container">
+    <?php if ($icon && $iconPosition === 'left'): ?>
+        <div class="mgz-icon-box-wrapper mgz-icon-box-size-<?= $block->escapeHtmlAttr($iconSize) ?> mgz-icon-box-left">
+            <?php if (!empty($link['url'])): ?>
+                <a href="<?= $block->escapeUrl($link['url']) ?>"
+                   title="<?= $block->escapeHtmlAttr($link['title']) ?>"
+                   <?= $link['blank'] ? 'target="_blank"' : '' ?>
+                   <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+            <?php endif; ?>
+            <i class="mgz-icon-box-element <?= $block->escapeHtmlAttr($icon) ?>"></i>
+            <?php if (!empty($link['url'])): ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="btn-position">
+        <?php if ($icon && $iconPosition === 'top'): ?>
+            <div class="mgz-icon-box-wrapper mgz-icon-box-size-<?= $block->escapeHtmlAttr($iconSize) ?>">
+                <?php if (!empty($link['url'])): ?>
+                    <a href="<?= $block->escapeUrl($link['url']) ?>"
+                       title="<?= $block->escapeHtmlAttr($link['title']) ?>"
+                       <?= $link['blank'] ? 'target="_blank"' : '' ?>
+                       <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+                <?php endif; ?>
+                <i class="mgz-icon-box-element <?= $block->escapeHtmlAttr($icon) ?>"></i>
+                <?php if (!empty($link['url'])): ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($title): ?>
+            <<?= $block->escapeHtmlAttr($titleType) ?> class="mgz-heading-text"
+                <?php if ($fontSize): ?>
+                    data-inline-fontsize="true"
+                    data-fontsize="<?= $block->escapeHtmlAttr($fontSize) ?>"
+                <?php endif; ?>>
+                <?php if (!empty($link['url'])): ?>
+                    <a href="<?= $block->escapeUrl($link['url']) ?>"
+                       title="<?= $block->escapeHtmlAttr($link['title']) ?>"
+                       <?= $link['blank'] ? 'target="_blank"' : '' ?>
+                       <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+                <?php endif; ?>
+                <?= $title ?>
+                <?php if (!empty($link['url'])): ?>
+                    </a>
+                <?php endif; ?>
+            </<?= $block->escapeHtmlAttr($titleType) ?>>
+        <?php endif; ?>
+
+        <div class="mgz-description"><?= $block->escapeHtml($description) ?></div>
+
+        <?php if ($addButton): ?>
+            <div class="mgz-button mgz-btn-style-<?= $block->escapeHtmlAttr($btnStyle) ?> mgz-btn-size-<?= $block->escapeHtmlAttr($btnSize) ?>">
+                <a href="<?= $block->escapeUrl($linkButton['url']) ?>"
+                   class="<?= !$displayAsLink ? 'mgz-icon-box-btn' : '' ?>"
+                   title="<?= $block->escapeHtmlAttr($linkButton['title']) ?>"
+                   <?= $onclickCode ? 'onclick="' . $block->escapeHtmlAttr($onclickCode) . '"' : '' ?>
+                   <?= $linkButton['blank'] ? 'target="_blank"' : '' ?>
+                   <?= $linkButton['nofollow'] ? 'rel="nofollow"' : '' ?>>
+                    <?php if ($addButtonIcon && $iconButton && $iconButtonPosition === 'left'): ?>
+                        <i class="<?= $block->escapeHtmlAttr($iconButton) ?>"></i>
+                    <?php endif; ?>
+                    <?= $block->escapeHtml($buttonTitle) ?>
+                    <?php if ($addButtonIcon && $iconButton && $iconButtonPosition === 'right'): ?>
+                        <i class="<?= $block->escapeHtmlAttr($iconButton) ?>"></i>
+                    <?php endif; ?>
+                </a>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($icon && $iconPosition === 'bottom'): ?>
+            <div class="mgz-icon-box-wrapper mgz-icon-box-size-<?= $block->escapeHtmlAttr($iconSize) ?>">
+                <?php if (!empty($link['url'])): ?>
+                    <a href="<?= $block->escapeUrl($link['url']) ?>"
+                       title="<?= $block->escapeHtmlAttr($link['title']) ?>"
+                       <?= $link['blank'] ? 'target="_blank"' : '' ?>
+                       <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+                <?php endif; ?>
+                <i class="mgz-icon-box-element <?= $block->escapeHtmlAttr($icon) ?>"></i>
+                <?php if (!empty($link['url'])): ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <?php if ($icon && $iconPosition === 'right'): ?>
+        <div class="mgz-icon-box-wrapper mgz-icon-box-size-<?= $block->escapeHtmlAttr($iconSize) ?> mgz-icon-box-right">
+            <?php if (!empty($link['url'])): ?>
+                <a href="<?= $block->escapeUrl($link['url']) ?>"
+                   title="<?= $block->escapeHtmlAttr($link['title']) ?>"
+                   <?= $link['blank'] ? 'target="_blank"' : '' ?>
+                   <?= $link['nofollow'] ? 'rel="nofollow"' : '' ?>>
+            <?php endif; ?>
+            <i class="mgz-icon-box-element <?= $block->escapeHtmlAttr($icon) ?>"></i>
+            <?php if (!empty($link['url'])): ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,13 @@
+<?php
+$rowInnerWidth = (int)$block->getViewModel()->getRowInnerWidth();
+$customCss     = $block->getViewModel()->getCustomCss();
+?>
+
+<?php if ($rowInnerWidth || $customCss): ?>
+<style>
+    @media (min-width: <?= $rowInnerWidth ?>px) {
+        .magezon-builder .mgz-container {width: <?= $rowInnerWidth ?>;}
+    }
+    <?= $customCss ?>
+</style>
+<?php endif; ?>

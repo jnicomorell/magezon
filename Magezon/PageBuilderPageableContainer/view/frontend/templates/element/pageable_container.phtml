@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var \Magezon\PageBuilderPageableContainer\Block\Element\PageableContainer $block
+ * @var \Magezon\PageBuilderPageableContainer\ViewModel\PageableContainer $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+$elements        = $block->getElements();
+$count           = count($elements);
+$element         = $block->getElement();
+$idOwl           = $element->getId();
+$carouselOptions = $block->getOwlCarouselOptions();
+$classes         = $block->getOwlCarouselClasses();
+?>
+
+<?php if ($count): ?>
+    <?php
+    $items = [];
+    foreach ($elements as $index => $_element) {
+        $_html = $_element->toHtml();
+        $items[] = [
+            'element' => $_element,
+            'html'    => $_html
+        ];
+    } ?>
+    <div id="<?= $idOwl ?>" class="mgz-carousel owl-carousel <?= implode(' ', $classes) ?>">
+        <?php foreach ($items as $item): ?>
+            <div class="item mgz-carousel-item">
+                <?= $item['html'] ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<script>
+    require(['jquery', 'Magezon_PageBuilder/js/slider'], function($) {
+        $('#<?= $idOwl ?>').slider(<?= $viewModel->getSerializedOptions($carouselOptions) ?>);
+    });
+</script>

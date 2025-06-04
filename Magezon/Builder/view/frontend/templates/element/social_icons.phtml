@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\Builder\ViewModel\SocialIcons $viewModel
+ */
+$viewModel = $block->getViewModel();
+
+$element      = $viewModel->getElement();
+$id           = $viewModel->getHtmlId();
+$items        = $viewModel->getItems();
+$linkTarget   = $viewModel->getLinkTarget();
+$followButton = $viewModel->showFollowButton();
+?>
+<?php if ($items) { ?>
+	<ul class="mgz-socialicons">
+	<?php foreach ($items as $i => $item) { ?>
+		<?php
+		$label = $viewModel->getSocialLabel($item->icon);
+		$link  = $viewModel->getLink($item->link);
+		?>
+		<li>
+			<a href="<?= $link ?>" target="<?= $linkTarget ?>" rel="noreferrer" title="<?= __('Follow on %1', $label) ?>">
+				<i id="<?= $id ?>-mgz-socialicons-item<?= $i ?>" class="<?= $item->icon ?>"></i>
+			</a>
+			<?php if ($followButton) { ?>
+				<a href="<?= $link ?>" class="mgz-socialicons-follow-button" title="<?= $block->escapeHtml($label) ?>"><?= __('Follow') ?></a>
+			<?php } ?>
+		</li>	
+	<?php } ?>
+	</ul>
+<?php } ?>

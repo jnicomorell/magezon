@@ -1,0 +1,8 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magezon\Builder\ViewModel\MagentoWidgetViewModel $viewModel
+ */
+$viewModel = $block->getViewModel();
+?>
+<?= $viewModel->getFilteredWidgetHtml(); ?>
