@@ -66,7 +66,7 @@ class Load extends Action
     public function execute()
     {
         $block = $this->layoutFactory->create()->createBlock(\Magezon\PageBuilder\Block\Builder::class);
-        $block->addData($this->request->getPostValue());
+        $block->addData($this->getRequest()->getPostValue());
         $resultRaw = $this->resultRawFactory->create();
         return $resultRaw->setContents($block->toHtml());
     }

@@ -17,7 +17,7 @@ use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\Request\Http as HttpRequest;
 use Magezon\PageBuilder\Api\TemplateRepositoryInterface;
 use Magezon\PageBuilder\Model\TemplateFactory;
 
@@ -47,7 +47,7 @@ class Save extends Action
     private $templateRepository;
 
     /**
-     * @var RequestInterface
+     * @var HttpRequest
      */
     private $request;
 
@@ -58,14 +58,14 @@ class Save extends Action
      * @param JsonFactory $resultJsonFactory
      * @param TemplateFactory $templateFactory
      * @param TemplateRepositoryInterface $templateRepository
-     * @param RequestInterface $request
+     * @param HttpRequest $request
      */
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
         TemplateFactory $templateFactory,
         TemplateRepositoryInterface $templateRepository,
-        RequestInterface $request
+        HttpRequest $request
     ) {
         parent::__construct($context);
         $this->resultJsonFactory = $resultJsonFactory;

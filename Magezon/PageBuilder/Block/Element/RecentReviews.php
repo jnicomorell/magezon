@@ -182,7 +182,7 @@ class RecentReviews extends \Magezon\Builder\Block\AbstractProduct
     public function getReviewContent(\Magento\Review\Model\Review $review): string
     {
         $element = $this->getElement();
-        $detail = $review->getDetail(); // método dinámico (funciona porque está en review_detail)
+        $detail = $review->getData('detail');
         $content = $detail;
         $reviewContentLength = $element->getData('review_content_length');
         if ($reviewContentLength) {

@@ -93,7 +93,7 @@ $reviewContent       = $element->getData('review_content');
 					<?php if ($reviewContent) { ?>
 	                <div class="mgz-review-content">
 	                	<?php
-						$detail  = $_review->getDetail();
+                                                $detail  = $_review->getData('detail');
 						$content = $this->getReviewContent($_review);
 	                	?>
 	                	<div class="<?= ($detail !== $content) ? 'mgz-review-content-short' : '' ?>"><?= $content ?> 
