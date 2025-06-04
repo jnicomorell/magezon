@@ -1,5 +1,5 @@
 <?php
-$element        = $this->getElement();
+$element        = $block->getElement();
 $showPinCcounts = $element->getData('show_pin_counts') ? $element->getData('show_pin_counts') : 'above';
 $buttonLarge    = $element->getData('button_large');
 $buttonRound    = $element->getData('button_round');
@@ -19,9 +19,8 @@ $buttonRound    = $element->getData('button_round');
 		});
 	</script>
 	<!-- PINTEREST -->
-	<script
-	    type="text/javascript"
-	    async defer
-	    src="//assets.pinterest.com/js/pinit.js"
-	></script>
+        <script
+            async defer
+            src="//assets.pinterest.com/js/pinit.js"
+        ></script>
 </span>
